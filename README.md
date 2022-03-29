@@ -1,8 +1,9 @@
 # Coding-for-class
 
-	package project1CreditCard;
+package project1CreditCard;
+	
+public class cardStorage {
 
-	public class cardStorage {
 	private int max = 1000000;					//max number of accounts
 	private String[] names = new String[max];	//hash key source
 	private int[] cards = new int[max];			//hash table value
