@@ -38,13 +38,10 @@ public class cardStorage {
 			if (key==names.length); { key=0; }
 			if (loops--==0) {break;}
 		}
-//		Scanner input = new Scanner(System.in);
-//		System.out.print("Enter a new password for your account:\t");
-		pw[key] = password;//input.nextLine();
+		pw[key] = password;
 		names[key]=name;
 		cards[key]=card;
 		count++;
-//		input.close();
 		System.out.println("Account created");
 	}
 	
@@ -83,12 +80,7 @@ public class cardStorage {
 	}
 	
 	private boolean validate(String name, int key, String password) {
-//		Scanner input = new Scanner(System.in);
-//		String password;
 		if (names[key].equals(name)) {
-//			System.out.print("Enter Password:\t");
-//			password = input.nextLine();
-//			input.close();
 			if (password.equals(pw[key])){
 				return true;
 			}
