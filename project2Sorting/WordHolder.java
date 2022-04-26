@@ -91,7 +91,7 @@ public class WordHolder {
 		return uniqueWords;
 	}
 	
-	public int getWordCount(String word) {
+	public int getWordCountLinear(String word) {
 		word.toLowerCase();
 		int hash = hashCode(word);
 		int start = hash;
@@ -104,6 +104,20 @@ public class WordHolder {
 				hash=0;
 			if (hash==start)
 				break;
+		}
+		return 0;
+	}
+	
+	public int getWordCountQuadratic(String word) {
+		word.toLowerCase();
+		int hash = hashCode(word);
+		int i=0;
+		while (!words[hash].isEmpty()) {
+			if (words[hash].equals(word)) {
+				return count[hash];
+			}
+			i++;
+			hash=((int)(hashCode(word) + i*.5 + .5* Math.pow(i, 2))%max);
 		}
 		return 0;
 	}
