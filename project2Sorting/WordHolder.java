@@ -26,7 +26,7 @@ public class WordHolder {
 		int hash = 1;
 		for (int i=0;i<word.length();i++)
 			hash = hash*(int)word.charAt(i);
-		return hash;
+		return Math.abs(hash%max);
 	}
 	
 	public int addWordLinear(String word) {			//currently set for linear replacement
@@ -51,22 +51,24 @@ public class WordHolder {
 	public int addWordsLinear(Collection<String> words) {
 		int wordsAdded=0;
 		for (String w : words)
-			wordsAdded += addWordLinear(w);
+			addWordLinear(w);
+		wordsAdded++;
 		return wordsAdded;
 	}
 	
 	public int addWordQuadratic(String word) {			//quadratic replacement
 		word.toLowerCase();
-		int hash = hashCode(word);
-		int i=0;
+		int wordHash = hashCode(word);
+		int hash = wordHash;
 		totalCount++;
+		int i=0;
 		while (!words[hash].isEmpty()) {
 			if (words[hash].equals(word)) {
 				count[hash]++;
 				return count[hash];
 			}
 			i++;
-			hash=((int)(hashCode(word) + i*.5 + .5* Math.pow(i, 2))%max);
+			hash=((int)(wordHash + i*.5 + .5* Math.pow(i, 2))%max);
 		}
 		words[hash]=word;
 		count[hash]=1;
@@ -110,14 +112,15 @@ public class WordHolder {
 	
 	public int getWordCountQuadratic(String word) {
 		word.toLowerCase();
-		int hash = hashCode(word);
+		int wordHash = hashCode(word);
+		int hash = wordHash;
 		int i=0;
 		while (!words[hash].isEmpty()) {
 			if (words[hash].equals(word)) {
 				return count[hash];
 			}
 			i++;
-			hash=((int)(hashCode(word) + i*.5 + .5* Math.pow(i, 2))%max);
+			hash=((int)(wordHash + i*.5 + .5* Math.pow(i, 2))%max);
 		}
 		return 0;
 	}
@@ -129,4 +132,12 @@ public class WordHolder {
 		uniqueCount = 0;
 		totalCount = 0;
 	}
+
+	@Override
+	public String toString() {
+		return "WordHolder [unique words=" + uniqueCount + "\n\ttotal words="
+				+ totalCount + "]";
+	}
+	
+	
 }

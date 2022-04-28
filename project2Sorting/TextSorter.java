@@ -7,7 +7,7 @@ public class TextSorter {
 	private WordHolder s = new WordHolder();
 	File newFile;
 	ArrayList<String> unsorted = new ArrayList<>();
-	String[] sorted = new String[unsorted.size()];
+	String[] sorted;
 	
 	public TextSorter(String fileName) {
 		super();
@@ -29,10 +29,6 @@ public class TextSorter {
 		return sorted;
 	}
 	
-	public String[] sortWords() {
-		
-	}
-
 	/*parseFile() converts the text file into a string array, then adds each word to 
 	 * the unsorted ArrayList. it also uses the simplify and addWords methods to remove
 	 * punctuation from the words and add them to the WordHolder hash table.
@@ -44,11 +40,9 @@ public class TextSorter {
 			while (inFile.hasNext()) {
 				String[] line =(inFile.nextLine().split("\\s+"));
 				for (String w : line)
-					unsorted.add(w);
+					unsorted.add(w.toLowerCase().replaceAll("\\p{Punct}", ""));
 			}
 			inFile.close();
-			simplify();
-			addWordsLinear();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,9 +54,39 @@ public class TextSorter {
 		s.addWordsLinear(unsorted);
 	}
 	
-	//simplify removes all punctuation from the unsorted ArrayList
-	private void simplify() {
-		for (String w : unsorted)
-			w = w.replaceAll("\\p{Punct}", "");
+	public String[] sortLinear() {
+		sorted = new String[unsorted.size()];
+		int index = 0;
+		addWordsLinear();
+		List<String> uniqueWords = s.getWords();
+		for (int i=0;i<uniqueWords.size();i++){
+			String word = uniqueWords.get(i);
+			int count = s.getWordCountLinear(word);
+			for (int j=0;j<count;j++)
+				sorted[index++]=word;
+		}
+		return sorted;
 	}
+	
+	public String[] sortquadratic() {
+		sorted = new String[unsorted.size()];
+		int index = 0;
+		s.addWordsQuadratic(unsorted);
+		List<String> uniqueWords = s.getWords();
+		for (int i=0;i<uniqueWords.size();i++){
+			String word = uniqueWords.get(i);
+			int count = s.getWordCountQuadratic(word);
+			for (int j=0;j<count;j++)
+				sorted[index++]=word;
+		}
+		return sorted;
+	}
+
+	@Override
+	public String toString() {
+		return "TextSorter [File=" + newFile.getName() + ", unsorted=" + unsorted.size() + ", sorted="
+				+ sorted.length + "]";
+	}
+	
+	
 }
