@@ -1,14 +1,14 @@
 package project1CreditCard;
 import java.util.*;
 
-public class cardStorage {
+public class CardStorage {
 	private int max = 1000000;					//max number of accounts
 	private String[] names = new String[max];	//hash key source
 	private int[] cards = new int[max];			//hash table value
 	private String[] pw = new String[max];		//validation/security
 	private int count = 0;						//number of accounts stored
 	
-	public cardStorage() {
+	public CardStorage() {
 		super();
 		for (int i=0;i<max;i++) {				//fill names with empty strings
 			names[i] = "";						//to avoid null errors
