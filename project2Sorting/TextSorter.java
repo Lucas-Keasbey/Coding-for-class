@@ -29,6 +29,14 @@ public class TextSorter {
 		return sorted;
 	}
 	
+	public String[] sortSimple() {
+		sorted = new String[unsorted.size()];
+		for (int i=0;i<unsorted.size();i++)
+			sorted[i]=unsorted.get(i);
+		Arrays.sort(sorted);
+		return sorted;
+	}
+	
 	/*parseFile() converts the text file into a string array, then adds each word to 
 	 * the unsorted ArrayList. it also uses the simplify and addWords methods to remove
 	 * punctuation from the words and add them to the WordHolder hash table.
@@ -68,7 +76,7 @@ public class TextSorter {
 		return sorted;
 	}
 	
-	public String[] sortquadratic() {
+	public String[] sortQuadratic() {
 		sorted = new String[unsorted.size()];
 		int index = 0;
 		s.addWordsQuadratic(unsorted);
@@ -88,5 +96,18 @@ public class TextSorter {
 				+ sorted.length + "]";
 	}
 	
-	
+	public static void main(String[] args) {
+		TextSorter linear = new TextSorter("C:\\Users\\Lucas\\Desktop\\College\\Spring 2022\\CS 3410 Data Structures\\WORKSPACE\\DataStructuresGroupProject\\src\\project2Sorting\\ToBeSorted");
+		long T1 = System.nanoTime(); 
+		linear.sortLinear();
+		long T2 = System.nanoTime(); 
+		long totalTime = T2-T1;
+		System.out.println("Linear Sort time:\t" + totalTime + "ms");
+		TextSorter quadratic = new TextSorter("C:\\Users\\Lucas\\Desktop\\College\\Spring 2022\\CS 3410 Data Structures\\WORKSPACE\\DataStructuresGroupProject\\src\\project2Sorting\\ToBeSorted");
+		T1 = System.nanoTime(); 
+		quadratic.sortQuadratic();
+		T2 = System.nanoTime(); 
+		totalTime = T2-T1;
+		System.out.println("Quadratic Sort time:\t" + totalTime + "ms");
+	}
 }
